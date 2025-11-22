@@ -1,0 +1,29 @@
+# --- Security (NEVER COMMIT THESE) ---
+.env
+.env.local
+.DS_Store
+
+# --- Python Virtual Environment ---
+venv/
+.venv/
+env/
+
+# --- Python Compiled Files (Junk) ---
+__pycache__/
+*.pyc
+
+# --- Database & Data ---
+# We don't want to commit the heavy vector database
+data/vector_db/
+chroma_db/
+__chroma_cache__/
+
+# --- Logs & Telemetry ---
+*.log
+*.jsonl
+app_telemetry.jsonl
+telemetry.jsonl
+
+# --- IDE Settings (Optional but good) ---
+.vscode/
+.idea/

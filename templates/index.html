@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 Quizzr</title>
+    <!-- Note: Ensure your file in static/ is named 'styles.css' or update this filename -->
+    <link rel="stylesheet" href='../static/styles.css'>
+</head>
+<body>
+    <h1>🧠 Quizzr</h1>
+    <p>Enter a topic from your notes to study.</p>
+
+    <div class="controls">
+        <input type="text" id="topic" placeholder="Topic..." onkeypress="handleEnter(event)">
+        <button class="primary" onclick="run('notes')">📝 Make Notes</button>
+        <button class="primary" onclick="run('quiz')">❓ Quiz Me</button>
+    </div>
+
+    <div id="loading" class="hidden">Thinking...</div>
+    <div id="result-area"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script src='../static/script.js'></script>
+</body>
+</html>
