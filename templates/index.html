@@ -3,18 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧠 Quizzr</title>
+    <title>🧠 CramBot</title>
     <!-- Note: Ensure your file in static/ is named 'styles.css' or update this filename -->
     <link rel="stylesheet" href='../static/styles.css'>
 </head>
 <body>
-    <h1>🧠 Quizzr</h1>
-    <p>Enter a topic from your notes to study.</p>
+    <h1>🧠 CramBot</h1>
+    <p>Paste your notes below, click "Learn", and the start studying!</p>
+    <div class="card" style="margin-bottom: 20px; border-color: #007bff";>
+        <h3>1. Knowledge Collection</h3>
+        <textarea id="knowledge-input" rows="5" style="width:100%;background: #2b2b2b;
+color: white;border: 1px solid #444444; padding: 10px;" placeholder="Paste your study material here..."></textarea>
+        <button class="primary" onclick="uploadKnowledge()" style="margin-top: 10px; width:100%">🚀 Learn</button>
+        <div id="upload-status" style="margin-top: 10px; font-size: 0.9em; color: lightgreen"></div>
+    </div>
+
 
     <div class="controls">
         <input type="text" id="topic" placeholder="Topic..." onkeypress="handleEnter(event)">
         <button class="primary" onclick="run('notes')">📝 Make Notes</button>
         <button class="primary" onclick="run('quiz')">❓ Quiz Me</button>
+        <button class="primary" onclick="run('video')">🎥Find Video</button>
     </div>
 
     <div id="loading" class="hidden">Thinking...</div>

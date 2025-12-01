@@ -1,6 +1,39 @@
 // Store current quiz data globally
 let currentQuiz = null;
 
+async function uploadKnowledge(){
+    const text = document.getElementById('knowledge-input').value;
+    const statusDiv = document.getElementById('upload-status');
+
+    if (!text) {alert("Please paste some text first"); return; }
+
+    statusDiv.innerText = "Processing... please wait.";
+    statusDiv.style.color = "yellow";
+
+    try {
+        const res = await fetch('/learn',{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({text:text})
+        });
+        const data = await res.json();
+
+        if (data.error){
+            statusDiv.innerText = "Error: " + data.error;
+            statusDiv.style.color = "red";
+        }
+        else{
+            statusDiv.innerText = "✅" + data.message;
+            statusDiv.style.color = "lightgreen";
+        }
+    }
+    catch (e){
+        statusDiv.innerText = "Connection failed.";
+        statusDiv.style.color = "red";
+    }
+}
+
+
 function handleEnter(event) {
     if (event.key === 'Enter') run('notes');
 }
@@ -40,7 +73,8 @@ if(mode === 'notes') {
     // Convert Markdown to HTML
     const cleanHtml = marked.parse(data.content);
     area.innerHTML = `<div class="card notes-content"><h3>📝 Study Notes</h3>${cleanHtml}</div>`;
-    } else {
+    }
+else if(mode === 'quiz') {
         // Quiz Mode
         currentQuiz = data.content;
         let html = `<div class="card"><h3>Quiz</h3><p><strong>${currentQuiz.question}</strong></p><ul>`;
@@ -52,6 +86,19 @@ if(mode === 'notes') {
         html += `</ul><div id="explanation" style="margin-top:10px;"></div></div>`;
         area.innerHTML = html;
     }
+else if(mode === 'video'){
+    area.innerHTML = `
+    <div class="card">
+        <h3>📺 ${data.content.title}</h3>
+        <div style="position: relative; padding-bottom: 56.25%;height: 0;overflow: hidden">
+            <iframe
+                src="${data.content.url}"
+                style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;border: 0;"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>`;
+}
 }
 
 function check(btn, choiceIndex) {

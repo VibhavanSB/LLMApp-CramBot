@@ -1,10 +1,12 @@
 import os, time, json, logging, re
 
 from flask import Flask, request, render_template, jsonify
+import ingest
 import google.generativeai as genai
 import chromadb
 from chromadb.utils import embedding_functions
 from dotenv import load_dotenv
+from youtube_search import YoutubeSearch
 
 load_dotenv()
 
@@ -52,6 +54,22 @@ def is_unsafe(query):
 def index():
     return render_template('index.html')
 
+@app.route('/learn', methods=['POST'])
+def learn():
+    data = request.json
+    text = data.get('text' ,'')
+
+    if len(text) > 50000:
+        return jsonify({"error": "Text is too long. Please keep it under 50000 characters."}), 400
+    if len(text) < 50:
+        return jsonify({"error": "Text is too short. Please provide more context."}), 400
+
+    try:
+        count = ingest.ingest_data(text)
+        return jsonify({"message": f"Successfully learned {count} chunks of data!"})
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "Failed to process text."}), 500
 @app.route('/generate', methods=['POST'])
 def generate():
     start = time.time()
@@ -60,6 +78,26 @@ def generate():
     mode = data.get('mode', 'notes')
 
     if is_unsafe(topic): return jsonify({"error": "Unsafe input"}), 400
+
+    if mode == 'video':
+        results = YoutubeSearch(topic + "astronomy", max_results=5).to_dict()
+
+        if results:
+            video_id = results[0]['id']
+            title = results[0]['title']
+
+            embed_url = f"https://www.youtube-nocookie.com/embed/{video_id}"
+
+            content = {
+                "title": title,
+                "id": video_id,
+                "url": embed_url
+            }
+
+        else:
+            return jsonify({"error": "No video found."}), 404
+
+        return jsonify({"content": content})
 
     try:
         # RAG
@@ -78,6 +116,7 @@ def generate():
             raw_text = resp.text.replace("```json", "").replace("```", "").strip()
             content = json.loads(raw_text)  # Parse JSON
 
+            return jsonify({"content": content}), 200
         # Telemetry
         logging.info(json.dumps({
             "time": time.time(),
@@ -95,4 +134,8 @@ def generate():
 
 
 if __name__ == '__main__':
+    print("-----------------------------------------------")
+    print("CramBot is starting up...")
+    print("Open http://localhost:5000")
+    print("-----------------------------------------------")
     app.run(port=5000, debug=True)
