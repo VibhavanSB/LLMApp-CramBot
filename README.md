@@ -1,15 +1,17 @@
-#  Study Buddy - AI Study Companion
+#  CramBot - AI Study Companion
 
-BioBuddy is a RAG-powered (Retrieval Augmented Generation) study application. It digests course materials (currently a Biology chapter) and helps students study in two modes:
+CramBot is a RAG-powered (Retrieval Augmented Generation) study application. It digests course materials (currently a Biology chapter) and helps students study in two modes:
 1.  **📝 Note Taker:** Generates concise bullet-point summaries of specific topics.
 2.  **❓ Quiz Generator:** Creates interactive multiple-choice questions to test knowledge.
+3.  **🎥 Video Finder:** Retrieves a YouTube video related to the topic for more information.
+
 
 Built with **Flask**, **ChromaDB**, and **Google Gemini 1.5 Flash**.
 
 ---
 
 ## 🚀 Features
-*   **RAG Architecture:** Retrievals are grounded in actual course data (`data/biology_chapter.txt`), reducing hallucinations.
+*   **RAG Architecture:** Retrievals are grounded in the material provided by the user reducing hallucinations.
 *   **Dual Modes:** Switches prompts dynamically between text summarization and structured JSON generation for quizzes.
 *   **Interactive UI:** Clean interface with immediate feedback on quiz answers.
 *   **Safety Guardrails:** Prevents prompt injection and handles input length limits.
@@ -87,7 +89,6 @@ study-buddy/
 ├── requirements.txt        # Python dependencies
 ├── .env                    # API Keys (Not committed to git)
 ├── data/
-│   ├── biology_chapter.txt # Source knowledge base
 │   └── vector_db/          # ChromaDB storage (created after ingest)
 ├── static/                 # CSS & JS
 │   ├── style.css
