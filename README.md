@@ -1,6 +1,6 @@
 #  CramBot - AI Study Companion
 
-CramBot is a RAG-powered (Retrieval Augmented Generation) study application. It digests course materials (currently a Biology chapter) and helps students study in two modes:
+CramBot is a RAG-powered (Retrieval Augmented Generation) study application. It digests course materials and helps students study in three modes:
 1.  **📝 Note Taker:** Generates concise bullet-point summaries of specific topics.
 2.  **❓ Quiz Generator:** Creates interactive multiple-choice questions to test knowledge.
 3.  **🎥 Video Finder:** Retrieves a YouTube video related to the topic for more information.
@@ -67,9 +67,10 @@ Open your browser to http://127.0.0.1:5000.
 
 ### Usage
 
-1. Topic: Type a biology term (e.g., "Mitochondria", "Prokaryotes").
+1. Topic: Type a relevant term (e.g., "Layers of the Earth").
 2. Make Notes: Click to get a summary.
 3. Quiz Me: Click to generate a dynamic multiple-choice question.
+4. Video: Watch videos based on the topic that you want more information on.
 
 ### 🧪 Evaluation
 
@@ -104,7 +105,7 @@ study-buddy/
 
 🛡️ Safety & Limitations
 
-- Guardrails: Inputs > 300 characters are rejected. Phrases like "ignore previous instructions" trigger a refusal.
+- Guardrails: Inputs > 300 characters are rejected. Phrases like "ignore previous instructions" trigger a refusal. Context material is limited to character count between 50 and 50,000.
 
 - Limit: The context window is currently limited to the top 2 relevant chunks from the provided chapter.
 

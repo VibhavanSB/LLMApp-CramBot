@@ -29,3 +29,4 @@ def ingest_data(text):
 
 if __name__ == "__main__":
     ingest_data()
+

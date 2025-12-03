@@ -45,7 +45,8 @@ def run_tests():
             print(f"{t['mode']:<6} | {t['input']:<15} | ERR    | {e}")
 
     print("-" * 60)
-    print(f"Pass Rate: {passed}/{len(tests)}")
+    success_rate = (passed / len(tests)) * 100
+    print(f"Pass Rate: {success_rate}%")
 
 
 if __name__ == "__main__":
